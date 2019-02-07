@@ -1,0 +1,29 @@
+(function(){
+	var send = window.postMessage;
+	document.addEventListener("message", function(data) {
+	var n = []
+    var e=document.getElementsByTagName("img")
+    for(var t=0;t<e.length;t++){
+        n.push(e[t].src);
+    }
+    var isProductPage = !!document.getElementById("product-addtocart-button")
+    var descriptionObj = document.querySelector("meta[property=\'og:title\']")
+    var categoryObj = document.querySelector(".breadcrumbs li:nth-last-child(2) span")
+    var priceObj = document.querySelector("meta[property=\'product:price:amount\']")
+    var currencyObj = document.querySelector("meta[property=\'product:price:currency\']")
+    var price = priceObj ? priceObj.getAttribute("content") : null
+    var currency = currencyObj ? currencyObj.getAttribute("content") : null
+    var description = descriptionObj ? descriptionObj.getAttribute("content") : null
+    var category = categoryObj ? categoryObj.innerText : null
+    var data = {
+        images: n,
+        price: price,
+        currency: currency,
+        isProductPage: isProductPage,
+        description: description,
+        category: category
+    }
+		send(JSON.stringify(data));
+	});
+	window.postMessage = window.originalPostMessage || window.postMessage;
+}());

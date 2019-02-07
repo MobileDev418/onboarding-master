@@ -1,0 +1,34 @@
+(function(){
+	var send = window.postMessage;
+	document.addEventListener("message", function(data) {
+	var n = []
+    var e=document.getElementsByTagName("img")
+    for(var t=0;t<e.length;t++){
+        n.push(e[t].src);
+    }
+    var isProductPage = !!document.querySelector(".app-cart")
+
+    var descriptionObj = document.querySelector(".listsummary .item-title a span")
+    var description = descriptionObj ? descriptionObj.innerText : null
+
+    var productUrlObj = document.querySelector(".listsummary .item-title a")
+    var productUrl = productUrlObj.getAttribute("href")
+
+    var priceObj = document.querySelector('.total-row:last-child span')
+    var price = priceObj ? priceObj.innerText : null
+
+    var currencyObj = document.querySelector('.total-row:last-child span')
+    var currency = currencyObj ? currencyObj.innerText : null
+
+    var data = {
+        images: n,
+        price: price,
+        currency: currency,
+        isProductPage: isProductPage,
+        description: description,
+        url: productUrl
+    }
+		send(JSON.stringify(data));
+	});
+	window.postMessage = window.originalPostMessage || window.postMessage;
+}());
