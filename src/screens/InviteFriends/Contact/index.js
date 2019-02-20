@@ -35,9 +35,8 @@ export default class InviteFriends extends Component {
   componentWillMount() {
     let self = this;
     let uid = firebase.auth().currentUser.uid;
-    const link =
-      // uncomment this line for production https://beta.itunes.apple.com/v1/app/1391950519
-      // new firebase.links.DynamicLink('https://itunes.apple.com/il/app/lolos/id1391950519?invitedby=' + uid, 'h54u6.app.goo.gl')
+    // invitation dynamic link
+    const link =    
       new firebase.links.DynamicLink(
         "https://h54u6.app.goo.gl/lolos?invitedby=" + uid,
         "h54u6.app.goo.gl"
